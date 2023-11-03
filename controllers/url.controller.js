@@ -3,14 +3,15 @@ const urlModel = require('../models/url.model')
 async function handleGenerateNewShortUrl(req, res) {
     const { url } = req.body
     if (!url) return res.status(400).json('url is required')
-    shortId = nanoid();
+    shortId = nanoid(3);
 
     await urlModel.create({
         shortId,
         redirectUrl: url,
         visitHistory: []
     })
-    res.status(200).json({ id: shortId })
+    return res.render('home', { id: shortId })
+    // res.status(200).json({ id: shortId })
 }
 async function handleGetUrl(req, res) {
     // console.log(req.params.shortId)
